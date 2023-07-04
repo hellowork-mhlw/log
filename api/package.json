@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "undici": "^5.22.1"
   }
