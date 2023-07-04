@@ -4,8 +4,8 @@ import { setGlobalDispatcher, ProxyAgent } from "undici";
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 
 export default async (req, res) => {
-  const { host = '35.213.91.45:80' } = req.query
-  setGlobalDispatcher(new ProxyAgent({uri: `http://${host}/` }))
-  const r = await fetch('https://httpbin.org/get')
+  const { host, url = 'https://httpbin.org/get' } = req.query
+  if (host) setGlobalDispatcher(new ProxyAgent({uri: `http://${host}/` }))
+  const r = await fetch(url)
   res.status(200).send(await r.text())
 }
