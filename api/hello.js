@@ -1,3 +1,7 @@
+export const config = {
+  runtime: 'experimental-edge',
+};
+
 import { env } from "process";
 import { setGlobalDispatcher, ProxyAgent } from "undici";
 
