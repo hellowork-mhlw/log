@@ -17,27 +17,18 @@ async function handler(imapConfig) {
           struct: true,
         })
   
-        const emails = []
+        const emailPromises = []
   
         fetch.on('message', (msg, seqno) => {
-          msg.on('body', (stream, info) => {
-            simpleParser(stream, (err, parsed) => {
-              if (err) {
-                console.error('Error parsing email:', err)
-                return
-              }
-              emails.push({
-                subject: parsed.subject,
-                from: parsed.from.text,
-                date: parsed.date,
-                text: parsed.text,
-              })
-              console.log(parsed)
+          emailPromises.push(new Promise(resolve2 => {
+            msg.on('body', (stream, info) => {
+              simpleParser(stream, (err, parsed) => resolve2({ err, parsed }))
             })
-          })
+          }))
         })
   
-        fetch.once('end', () => {
+        fetch.once('end', async () => {
+          const emails = await Promise.all(emailPromises)
           imap.end()
           resolve(emails)
         })
