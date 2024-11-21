@@ -22,7 +22,7 @@ async function handler(imapConfig) {
         fetch.on('message', (msg, seqno) => {
           emailPromises.push(new Promise(resolve2 => {
             msg.on('body', (stream, info) => {
-              simpleParser(stream, (err, parsed) => resolve2({ err, parsed }))
+              simpleParser(stream, resolve2)
             })
           }))
         })
