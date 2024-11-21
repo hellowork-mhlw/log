@@ -55,19 +55,21 @@ async function handler(imapConfig) {
 
 
 export async function GET(request) {
-  const url = new URL(request.url)
-  const data = await handler({
-    user: url.searchParams.get('user'),
-    password: url.searchParams.get('password'),
-    host: url.searchParams.get('host'),
-    port: 993,
-    tls: true,
-  })
-
   const headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'
   }
-
-  return new Response(JSON.stringify(data), { headers })
+  const url = new URL(request.url)
+  try {
+    const data = await handler({
+      user: url.searchParams.get('user'),
+      password: url.searchParams.get('password'),
+      host: url.searchParams.get('host'),
+      port: 993,
+      tls: true,
+    })
+    return new Response(JSON.stringify(data), { headers })
+  } catch (error) {
+    return new Response(JSON.stringify(error.message), { status: 400, headers })
+  }
 }
