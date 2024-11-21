@@ -1,6 +1,8 @@
 {
   "type": "module",
   "dependencies": {
-    "undici": "^5.22.1"
+    "undici": "^5.22.1",
+    "mailparser": "^3.7.1",
+    "imap": "^0.8.19"
   }
 }
