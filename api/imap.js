@@ -5,8 +5,10 @@ async function handler(imapConfig) {
   return new Promise((resolve, reject) => {
     const imap = new Imap(imapConfig)
     imap.once('ready', () => {
-      imap.openBox('INBOX', true, (err, box) => {
-        if (err) {
+      imap.openBox('INBOX', true, (error, box) => {
+        if (error) {
+          console.error('INBOX error:', error)
+          reject(error)
           return
         }
   
@@ -41,8 +43,9 @@ async function handler(imapConfig) {
       })
     })
   
-    imap.once('error', (err) => {
-      console.error('IMAP error:', err)
+    imap.once('error', (error) => {
+      console.error('IMAP error:', error)
+      reject(error)
     })
   
     imap.connect()
