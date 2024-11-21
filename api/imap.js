@@ -32,6 +32,7 @@ async function handler(imapConfig) {
                 date: parsed.date,
                 text: parsed.text,
               })
+              console.log(parsed)
             })
           })
         })
