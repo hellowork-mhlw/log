@@ -3,9 +3,10 @@ import nodemailer from 'nodemailer'
 export async function POST(request) {
     try {
         const { transport, mail } = await request.json()
-        return Response.json(await nodemailer.createTransport(transport).sendMail(mail))
+        const info = await nodemailer.createTransport(transport).sendMail(mail)
+        return Response.json(info)
     } catch (error) {
-        return new Response(error.message, { status: 400 })
+        return new Response.json(error.message, { status: 400 })
     }
 }
 
