@@ -1,9 +1,14 @@
-import { resolve4 } from 'node:dns/promises'
+import { resolve4, reverse } from 'node:dns/promises'
 
 export async function GET(request) {
     try {
-        const info = await resolve4("example.com")
-        return Response.json(info)
+        console.log(request)
+        const ips = await resolve4("example.com")
+        if (ips.length) {
+            const hostnames = await reverse(ips[0])
+            return Response.json(hostnames)
+        }
+        return new Response.json(null, { status: 404 })
     } catch (error) {
         return new Response.json(error.message, { status: 400 })
     }
