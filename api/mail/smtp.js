@@ -14,3 +14,7 @@ export async function POST(request) {
         return new Response(error.message, { status: 400, headers })
     }
 }
+
+export async function OPTIONS() {
+    return new Response()
+}
