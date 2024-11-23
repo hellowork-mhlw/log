@@ -9,7 +9,7 @@ export async function POST(request) {
         const info = await client.list()
         return Response.json(info)
     } catch (error) {
-        return new Response.json(error.message, { status: 400 })
+        return Response.json(error.message, { status: 400 })
     }
 }
 
