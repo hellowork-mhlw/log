@@ -12,7 +12,7 @@ async function handler(imapConfig) {
                     return
                 }
 
-                const fetch = imap.seq.fetch(`${Math.max(1, box.messages.total - 9)}:*`, {
+                const fetch = imap.seq.fetch(`${Math.max(1, box.messages.total - 99)}:*`, {
                     bodies: '',
                     struct: true,
                 })
