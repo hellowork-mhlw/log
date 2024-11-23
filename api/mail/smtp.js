@@ -1,17 +1,11 @@
 import nodemailer from 'nodemailer'
 
 export async function POST(request) {
-    const headers = {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-    }
-
     try {
         const { transport, mail } = await request.json()
-        const info = await nodemailer.createTransport(transport).sendMail(mail)
-        return new Response(JSON.stringify(info), { headers })
+        return Response.json(await nodemailer.createTransport(transport).sendMail(mail))
     } catch (error) {
-        return new Response(error.message, { status: 400, headers })
+        return new Response(error.message, { status: 400 })
     }
 }
 
