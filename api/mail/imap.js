@@ -48,7 +48,7 @@ export async function POST(request) {
         const data = await handler(transport)
         return Response.json(data)
     } catch (error) {
-        return new Response.json(error.message, { status: 400 })
+        return Response.json(error.message, { status: 400 })
     }
 }
 
