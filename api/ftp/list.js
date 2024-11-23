@@ -7,8 +7,10 @@ export async function POST(request) {
         const { options } = await request.json()
         await client.access(options)
         const info = await client.list()
+        client.close()
         return Response.json(info)
     } catch (error) {
+        client.close()
         return Response.json(error.message, { status: 400 })
     }
 }
