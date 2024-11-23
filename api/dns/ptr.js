@@ -8,8 +8,8 @@ export async function GET(request) {
             const hostnames = await reverse(ips[0])
             return Response.json(hostnames)
         }
-        return new Response.json(null, { status: 404 })
+        return Response.json(null, { status: 404 })
     } catch (error) {
-        return new Response.json(error.message, { status: 400 })
+        return Response.json(error.message, { status: 400 })
     }
 }
