@@ -2,7 +2,7 @@ import { resolve4, reverse } from 'node:dns/promises'
 
 export async function GET(request) {
     try {
-        const hostname = request.url.searchParams.get('hostname')
+        const hostname = new URL(request.url).searchParams.get('hostname')
         const ips = await resolve4(hostname)
         if (ips.length) {
             const hostnames = await reverse(ips[0])
