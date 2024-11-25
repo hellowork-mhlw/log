@@ -3,18 +3,21 @@ import { Readable } from 'node:stream'
 
 export async function POST(request) {
     const formData = await request.formData()
-    const file = formData.get('file')
-    console.log(file)
-    console.log(formData.getAll('files'))
+    const files = formData.getAll('files')
+    console.log(files)
     const client = new Client()
     client.ftp.verbose = true
     try {
         const options = Object.fromEntries(new URL(request.url).searchParams)
         await client.access(options)
-        const stream = Readable.from(file.stream())
-        const info = await client.uploadFrom(stream, file.name)
+        let message = ''
+        for (const file of files) {
+            const stream = Readable.from(file.stream())
+            const info = await client.uploadFrom(stream, file.name)
+            message += info.message + '\n'
+        }
         client.close()
-        return Response.json(info)
+        return Response.json({ message })
     } catch (error) {
         client.close()
         return Response.json(error.message, { status: 400 })
