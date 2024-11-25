@@ -1,13 +1,10 @@
 import { Client } from 'basic-ftp'
 import formidable from 'formidable'
 
-export const config = {
-    api: {
-        bodyParser: false
-    }
-}
-
 export async function POST(request) {
+    const formData = await request.formData()
+    console.log(formData.get('file'))
+    return new Response('ok')
     const form = formidable({})
     const client = new Client()
     client.ftp.verbose = true
