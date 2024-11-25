@@ -1,5 +1,6 @@
 import { Client } from 'basic-ftp'
 import { PassThrough } from 'node:stream'
+import { stat } from 'fs/promises'
 
 export async function GET(request) {
     const client = new Client()
@@ -10,10 +11,11 @@ export async function GET(request) {
         console.log(options.filename, new Date(), 0)
         const passThroughStream = new PassThrough()
         console.log(options.filename, new Date(), 1)
-        await client.downloadTo(passThroughStream, options.filename)
+        await client.downloadTo(`/tmp/${options.filename}`, options.filename)
         console.log(options.filename, new Date(), 2)
         client.close()
         console.log(options.filename, new Date(), 3)
+        return new Response(await stat(`/tmp/${options.filename}`))
         return new Response(passThroughStream, {
             headers: {
                 'Content-Type': 'application/octet-stream',
