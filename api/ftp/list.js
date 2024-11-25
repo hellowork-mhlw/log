@@ -4,7 +4,7 @@ export async function POST(request) {
     const client = new Client()
     client.ftp.verbose = true
     try {
-        const { options } = await request.json()
+        const options = Object.fromEntries(new URL(request.url).searchParams)
         await client.access(options)
         const info = await client.list()
         client.close()
