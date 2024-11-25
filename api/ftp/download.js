@@ -15,7 +15,7 @@ export async function GET(request) {
         return new Response(await readFile(filepath), {
             headers: {
                 'Content-Type': mime.lookup(options.filename) || 'application/octet-stream',
-                'Content-Disposition': `attachment; filename="${options.filename}"`,
+                'Content-Disposition': `attachment; filename="${encodeURIComponent(options.filename)}"`,
             }
         })
     } catch (error) {
