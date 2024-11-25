@@ -4,6 +4,8 @@ import { Readable } from 'node:stream'
 export async function POST(request) {
     const formData = await request.formData()
     const file = formData.get('file')
+    console.log(file)
+    console.log(formData.getAll('files'))
     const client = new Client()
     client.ftp.verbose = true
     try {
