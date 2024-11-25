@@ -1,18 +1,16 @@
 import { Client } from 'basic-ftp'
-import formidable from 'formidable'
+import { Readable } from 'node:stream'
 
 export async function POST(request) {
     const formData = await request.formData()
-    console.log(formData.get('file'))
-    return new Response('ok')
-    const form = formidable({})
+    const file = formData.get('file')
     const client = new Client()
     client.ftp.verbose = true
     try {
-        const [fields, files] = await form.parse(request)
         const options = Object.fromEntries(new URL(request.url).searchParams)
         await client.access(options)
-        const info = await client.uploadFrom(files.file.filepath, files.file.originalFilename)
+        const stream = Readable.from(file.stream())
+        const info = await client.uploadFrom(stream, file.name)
         client.close()
         return Response.json(info)
     } catch (error) {
