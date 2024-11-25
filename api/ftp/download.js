@@ -9,11 +9,11 @@ export async function GET(request) {
         console.log(options.filename, new Date(), 0)
         const passThroughStream = new PassThrough()
         console.log(options.filename, new Date(), 1)
-        await client.downloadTo(passThroughStream, options.filename)
+        await client.downloadTo('/tmp/' + Date.now() + '.txt', options.filename)
         console.log(options.filename, new Date(), 2)
         client.close()
         console.log(options.filename, new Date(), 3)
-        return new Response(passThroughStream, {
+        return new Response(Date.now(), {
             headers: {
                 'Content-Type': 'application/octet-stream',
                 'Content-Disposition': `attachment; filename="${options.filename}"`,
