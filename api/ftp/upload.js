@@ -3,7 +3,7 @@ import { Readable } from 'node:stream'
 
 export async function POST(request) {
     const formData = await request.formData()
-    const files = formData.get('files')
+    const files = formData.getAll('files')
     console.log(files, files.length)
     for (const file of files) {
         console.log(file)
