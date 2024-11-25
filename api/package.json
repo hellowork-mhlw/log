@@ -4,6 +4,7 @@
     "basic-ftp": "^5.0.5",
     "imap": "^0.8.19",
     "mailparser": "^3.7.1",
+    "mime-types": "^2.1.35",
     "nodemailer": "^6.9.16",
     "undici": "^5.22.1"
   }
