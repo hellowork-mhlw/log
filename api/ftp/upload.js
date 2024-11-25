@@ -9,15 +9,14 @@ export async function POST(request) {
     try {
         const options = Object.fromEntries(new URL(request.url).searchParams)
         await client.access(options)
-        const messages = []
+        let info
         for (const file of files) {
             console.log(file)
             const stream = Readable.from(file.stream())
-            const info = await client.uploadFrom(stream, file.name)
-            messages.push(info.message)
+            info = await client.uploadFrom(stream, file.name)
         }
         client.close()
-        return Response.json({ message: messages.join('\n') })
+        return Response.json(info)
     } catch (error) {
         client.close()
         return Response.json(error.message, { status: 400 })
