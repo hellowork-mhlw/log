@@ -5,7 +5,6 @@ export async function POST(request) {
     const formData = await request.formData()
     const files = formData.getAll('files')
     const client = new Client()
-    client.ftp.verbose = true
     try {
         const options = Object.fromEntries(new URL(request.url).searchParams)
         await client.access(options)
