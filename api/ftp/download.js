@@ -5,7 +5,6 @@ import { readFile } from 'fs/promises'
 
 export async function GET(request) {
     const client = new Client()
-    client.ftp.verbose = true
     try {
         const options = Object.fromEntries(new URL(request.url).searchParams)
         await client.access(options)
