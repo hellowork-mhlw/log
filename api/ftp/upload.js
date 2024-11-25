@@ -11,7 +11,7 @@ export async function POST(request) {
         const options = Object.fromEntries(new URL(request.url).searchParams)
         await client.access(options)
         let message = ''
-        for (const file of files) {
+        for (const file of files.files) {
             console.log(file)
             const stream = Readable.from(file.stream())
             const info = await client.uploadFrom(stream, file.name)
