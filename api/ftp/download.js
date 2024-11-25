@@ -15,7 +15,7 @@ export async function GET(request) {
         console.log(options.filename, new Date(), 2)
         client.close()
         console.log(options.filename, new Date(), 3)
-        return new Response(await stat(`/tmp/${options.filename}`))
+        return Response.json(await stat(`/tmp/${options.filename}`))
         return new Response(passThroughStream, {
             headers: {
                 'Content-Type': 'application/octet-stream',
