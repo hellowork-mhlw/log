@@ -1,15 +1,21 @@
 import { Client } from 'basic-ftp'
-import { Readable } from 'node:stream'
+import formidable from 'formidable'
+
+export const config = {
+    api: {
+        bodyParser: false
+    }
+}
 
 export async function POST(request) {
+    const form = formidable({})
     const client = new Client()
     client.ftp.verbose = true
     try {
+        const [fields, files] = await form.parse(request)
         const options = Object.fromEntries(new URL(request.url).searchParams)
         await client.access(options)
-        const blob = await request.blob()
-        const stream = Readable.from(blob.stream())
-        const info = await client.uploadFrom(stream, 'hogehoge.txt')
+        const info = await client.uploadFrom(files.file.filepath, files.file.originalFilename)
         client.close()
         return Response.json(info)
     } catch (error) {
