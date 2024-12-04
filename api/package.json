@@ -6,6 +6,7 @@
     "mailparser": "^3.7.1",
     "mime-types": "^2.1.35",
     "nodemailer": "^6.9.16",
+    "ping": "^0.4.4",
     "undici": "^5.22.1",
     "whois": "^2.14.2"
   }
