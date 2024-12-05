@@ -5,9 +5,7 @@
     "imap": "^0.8.19",
     "mailparser": "^3.7.1",
     "mime-types": "^2.1.35",
-    "net-ping": "^1.2.4",
     "nodemailer": "^6.9.16",
-    "traceroute": "^1.0.0",
     "undici": "^5.22.1",
     "whois": "^2.14.2"
   }
