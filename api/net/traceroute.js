@@ -9,12 +9,9 @@ async function runTraceroute(target) {
       });
     });
 
-    console.log("Traceroute result:");
-    hops.forEach((hop, index) => {
-      console.log(`Hop ${index + 1}:`, hop);
-    });
+    return hops;
   } catch (error) {
-    console.error("Error during traceroute:", error);
+    return error;
   }
 }
 
