@@ -1,27 +1,21 @@
-import Traceroute from 'nodejs-traceroute'
+import traceroute from "traceroute";
 
-async function runTraceroute(host) {
-    return new Promise((resolve, reject) => {
-        try {
-            const tracer = new Traceroute()
-            const hops = []
+async function runTraceroute(target) {
+  try {
+    const hops = await new Promise((resolve, reject) => {
+      traceroute.trace(target, (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    });
 
-            tracer
-                .on('hop', (hop) => {
-                    hops.push(hop)
-                })
-                .on('done', () => {
-                    resolve(hops)
-                })
-                .on('error', (error) => {
-                    reject(error)
-                })
-
-            tracer.trace(host)
-        } catch (error) {
-            reject(error)
-        }
-    })
+    console.log("Traceroute result:");
+    hops.forEach((hop, index) => {
+      console.log(`Hop ${index + 1}:`, hop);
+    });
+  } catch (error) {
+    console.error("Error during traceroute:", error);
+  }
 }
 
 export async function GET(request) {
